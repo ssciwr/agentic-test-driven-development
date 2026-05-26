@@ -2,7 +2,7 @@
 marp: true
 theme: ssc
 paginate: true
-title: Course Slides Template
+title: Agentic Test-Driven Development
 description: SSC Compact Course
 ---
 
@@ -10,49 +10,31 @@ description: SSC Compact Course
 <!-- _paginate: false -->
 <!-- _footer: "Last updated: 2026-05-26" -->
 
-# Course Slides Template
+# Agentic Test-Driven Development
 
-## A Person, SSC
-
----
-
-# Slide title
-
-Slide content is just normal markdown. Lists using `*` are displayed one by one, e.g:
-
-* First point
-* Second point
+## Liam Keegan, SSC
 
 ---
 
-# Images
+# Tenative Outline
 
-The alt text for images can be used to set the size, etc. See [marpit.marp.app/image-syntax](https://marpit.marp.app/image-syntax)
+- Classical tests intro
+- Coding with LLMs intro
+- Classical TDD intro
+- Agentic TDD: what changes, what stays the same
+- Common failure modes
+- Best practices
+- Hands on
+  - Could be fully hands on
+    - But hard to coordinate, each student will rapidly diverge
+  - Could be just me coding
+    - Students interacting with me as we discuss what to do next, pros/cons of different approaches
 
-The url can be a local file if that file is added to this folder, or a remote url.
 
-For example `![width:600px drop-shadow](https://backend.ssc.uni-heidelberg.de/sites/default/files/site_logo/WEB%20Kopfgrafik%20Scientific-Software-Center%20KURZ_neu.svg)`:
+# Getting what you ask for
 
-![width:600px drop-shadow](https://backend.ssc.uni-heidelberg.de/sites/default/files/site_logo/WEB%20Kopfgrafik%20Scientific-Software-Center%20KURZ_neu.svg)
-
----
-
-![bg left:33%](https://picsum.photos/720?image=27)
-
-# Background images
-
-Background images can also be added.
-
-For example this slide has `![bg left:33%](https://picsum.photos/720?image=27)`, where the background image takes up 33% of the slide on the left, and the rest of the space is used for the slide contents.
-
-See [marpit.marp.app/image-syntax](https://marpit.marp.app/image-syntax) for more details.
+LLMs are amazingly good at giving you what you ask for. But not always at giving you what you need.
 
 ---
 
-# Navigation
-
-- `right` or `down` or `spacebar` to go to next slide
-- `left` or or `up` or shift+spacebar` to go to previous slide
-- `f` to toggle full screen
-- `o` or `esc` to toggle overview
-- `p` open presenter view
+# 
