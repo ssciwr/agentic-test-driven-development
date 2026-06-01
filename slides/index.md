@@ -30,6 +30,8 @@ description: SSC Compact Course
   - Could be just me coding
     - Students interacting with me as we discuss what to do next, pros/cons of different approaches
 
+---
+
 # Advantages of coding with LLMs
 
 - Can generate a lot of code very quickly
@@ -42,6 +44,8 @@ In what scenarios is this an advantage?
 - Anything where being wrong is not a huge deal
 - Working with a language and/or domain where you are not an expert
 
+---
+
 # Disadvantages of coding with LLMs
 
 - Can generate a lot of code very quickly
@@ -52,6 +56,8 @@ In what scenarios is this a disadvantage?
 - When your project gets bigger
 - When correctness and/or understanding is critical
 - If you need other humans (including yourself) to review and understand the code
+
+---
 
 # Levels of understanding
 
@@ -210,6 +216,8 @@ The key point is to think about the test before the implementation,
 which also forces you to think about the API before the implementation,
 and to work in small incremental steps.
 
+---
+
 # Test suite as oracle
 
 With LLM code, having a good test suite becomes even more valuable
@@ -227,6 +235,8 @@ then you can be fairly confident in the correctness of the generated code, even 
 
 Anecdote: one OpenAI developer still writes their tests by hand, the LLM then writes all the code.
 
+---
+
 # Context
 
 The LLM that wrote the code has all that code in its context.
@@ -235,3 +245,47 @@ To get a less biased opinion, clear the context and/or use a different model:
 - `/review` in claude/codex does a review with fresh context window
 - `/clear` then ask it e.g. to review the tests and if they cover all relevant cases
 - use another model to review code and tests, and ask it questions
+
+---
+
+# A brief recap
+
+Software development has been around for many decades.
+
+In that time, new programming languages and best practices have arisen, but the basic paradigm of humans writing code has not really changed... until very recently.
+
+We'll very briefly recap using Andrej Karpathy tweets.
+
+---
+
+# Jan 2023: English
+
+> The hottest new programming language is English
+
+https://x.com/karpathy/status/1617979122625712128
+
+---
+
+# Feb 2025: Vibe coding
+
+> There's a new kind of coding I call "vibe coding" [...] it's not really coding - I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.
+
+https://x.com/karpathy/status/1886192184808149383
+
+---
+
+# Feb 2026: Agentic engineering
+
+> programming via LLM agents is increasingly becoming a default workflow for professionals [...] to differentiate it from vibe coding, personally my current favorite "agentic engineering" [...]
+
+https://x.com/karpathy/status/2019137879310836075
+
+---
+
+# Keeping up
+
+Dec 2025:
+
+> I've never felt this much behind as a programmer [...] I have a sense that I could be 10X more powerful if I just properly string together what has become available [...] some powerful alien tool was handed around except it comes with no manual and everyone has to figure out how to hold it and operate it [...]
+
+https://x.com/karpathy/status/2004607146781278521
