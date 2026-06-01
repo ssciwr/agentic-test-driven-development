@@ -248,44 +248,60 @@ To get a less biased opinion, clear the context and/or use a different model:
 
 ---
 
-# A brief recap
+# 1960 - 2020: Humans write code
 
 Software development has been around for many decades.
 
-In that time, new programming languages and best practices have arisen, but the basic paradigm of humans writing code has not really changed... until very recently.
-
-We'll very briefly recap using Andrej Karpathy tweets.
+In that time, new programming languages and methods were developed, and many things changed - but the basic paradigm of humans writing code didn't really change.
 
 ---
 
-# Jan 2023: English
+# 2023: LLMs can write code
 
+It turns out LLMs can (sort of) generate (sometimes working) code from plain english prompts.
+
+> **Andrej Karpathy** @karpathy
+>
 > The hottest new programming language is English
-
-https://x.com/karpathy/status/1617979122625712128
+>
+> Jan 2023
+> https://x.com/karpathy/status/1617979122625712128
 
 ---
 
-# Feb 2025: Vibe coding
+# 2025: Vibe coding
 
+You can (more or less) code fun projects, without understanding the code, just by talking to the model.
+
+> **Andrej Karpathy** @karpathy
+>
 > There's a new kind of coding I call "vibe coding" [...] it's not really coding - I just see stuff, say stuff, run stuff, and copy paste stuff, and it mostly works.
-
-https://x.com/karpathy/status/1886192184808149383
+>
+> Feb 2025
+> https://x.com/karpathy/status/1886192184808149383
 
 ---
 
-# Feb 2026: Agentic engineering
+# 2026: Agentic engineering
 
+LLMs are now good enough at coding to be used by professional developers in serious projects.
+
+> **Andrej Karpathy** @karpathy
+>
 > programming via LLM agents is increasingly becoming a default workflow for professionals [...] to differentiate it from vibe coding, personally my current favorite "agentic engineering" [...]
-
-https://x.com/karpathy/status/2019137879310836075
+>
+> Feb 2026
+> https://x.com/karpathy/status/2019137879310836075
 
 ---
 
 # Keeping up
 
-Dec 2025:
+If you feel like it's hard to keep up with this dramatic rate of change, you're not alone!
 
+> **Andrej Karpathy** @karpathy
+>
 > I've never felt this much behind as a programmer [...] I have a sense that I could be 10X more powerful if I just properly string together what has become available [...] some powerful alien tool was handed around except it comes with no manual and everyone has to figure out how to hold it and operate it [...]
-
-https://x.com/karpathy/status/2004607146781278521
+>
+> Dec 2025
+> https://x.com/karpathy/status/2004607146781278521
