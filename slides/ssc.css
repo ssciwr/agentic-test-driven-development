@@ -194,16 +194,6 @@ section img {
   margin-right: auto;
 }
 
-/*
- * Tweet card: blockquotes are rendered as X/Twitter posts. Structure the
- * markdown as:
- *   > **Display Name** @handle
- *   >
- *   > Tweet body text.
- *   >
- *   > [Date](https://x.com/handle/status/...)
- * The first line becomes the header, the last line the (linked) date footer.
- */
 section blockquote {
   position: relative;
   max-width: 840px;
@@ -219,26 +209,12 @@ section blockquote {
 
 section blockquote::before { content: none; }
 
-/* X logo, top-right corner */
-section blockquote::after {
-  content: "";
-  position: absolute;
-  top: 20px;
-  right: 26px;
-  width: 22px;
-  height: 22px;
-  background: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2024%2024'%3E%3Cpath%20fill='%23000000'%20d='M18.244%202.25h3.308l-7.227%208.26%208.502%2011.24H16.17l-5.214-6.817L4.99%2021.75H1.68l7.73-8.835L1.254%202.25H8.08l4.713%206.231zm-1.161%2017.52h1.833L7.084%204.126H5.117z'/%3E%3C/svg%3E") center / contain no-repeat;
-  opacity: 0.9;
-}
-
-/* tweet body text */
 section blockquote > p {
   font-size: 22px;
   line-height: 1.45;
   margin: 8px 0;
 }
 
-/* header: display name (bold) above @handle (muted) */
 section blockquote > p:first-child {
   margin: 0 0 12px 0;
   padding-right: 36px;
@@ -254,14 +230,13 @@ section blockquote > p:first-child strong {
   color: var(--ssc-heading);
 }
 
-/* footer: date (optionally linking to the tweet) */
 section blockquote > p:last-child {
   margin: 14px 0 0;
   font-size: 15px;
   color: var(--ssc-muted);
 }
 
-section blockquote > p:last-child a {
+section blockquote > p a {
   color: var(--ssc-muted);
   text-decoration: none;
 }
