@@ -19,20 +19,12 @@ description: SSC Compact Course
 # Course Outline
 
 - Coding with LLMs
-- Testing with LLMs
-- Software testing best practices
+- Software testing
+- TODO Testing with LLMs
+- Development workflows
 - Hands on test-driven development
 - Hands on spec-driven development
 - Hands on vibe coding
-- Classical TDD intro
-- Agentic TDD: what changes, what stays the same
-- Common failure modes
-- Best practices
-- Hands on
-  - Could be fully hands on
-    - But hard to coordinate, each student will rapidly diverge
-  - Could be just me coding
-    - Students interacting with me as we discuss what to do next, pros/cons of different approaches
 
 ---
 
