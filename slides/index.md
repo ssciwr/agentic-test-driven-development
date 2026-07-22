@@ -8,7 +8,7 @@ description: SSC Compact Course
 
 <!-- _class: title -->
 <!-- _paginate: false -->
-<!-- _footer: "Last updated: 2026-07-20" -->
+<!-- _footer: "Last updated: 2026-07-22" -->
 
 # Agentic Test-Driven Development
 
@@ -18,23 +18,23 @@ description: SSC Compact Course
 
 # Course Outline
 
-- Coding with LLMs
-- Software testing
-- TODO Testing with LLMs
-- Development workflows
-- Hands on test-driven development
-- Hands on spec-driven development
-- Hands on vibe coding
+- **5min** A brief history of coding
+- **20min** Coding with LLMs
+- **30min** Software testing
+- **10min** Development workflows
+- **30min** Hands on test-driven development
+- **30min** Hands on spec-driven development
+- **10min** Hands on vibe coding
 
 ---
 
 <!-- _class: subtitle -->
 
-# Coding with LLMs
+# A brief history of coding
 
 ---
 
-# 1960 - 2020: Humans write code
+# ~1960 - ~2020: Humans write code
 
 Software development has been around for many decades.
 
@@ -120,9 +120,15 @@ If you feel like it's hard to keep up with this dramatic rate of change, you're 
 
 ---
 
+<!-- _class: subtitle -->
+
+# Coding with LLMs
+
+---
+
 # Advantages of coding with LLMs
 
-- Can generate **a lot** of **working** code **very quickly**, even without understanding it
+- You can generate **a lot** of **working** code **very quickly**, even without understanding it
 
 In what scenarios is this an advantage?
 
@@ -136,7 +142,7 @@ In what scenarios is this an advantage?
 
 # Disadvantages of coding with LLMs
 
-- Can generate **a lot** of working code very quickly, even **without understanding it**
+- You can generate **a lot** of working code very quickly, even **without understanding it**
 
 In what scenarios is this a disadvantage?
 
@@ -148,6 +154,8 @@ In what scenarios is this a disadvantage?
 
 ---
 
+???
+
 # Validation as the bottleneck
 
 When writing code with LLMs, creating the code itself is no longer the expensive / difficult part.
@@ -155,6 +163,204 @@ When writing code with LLMs, creating the code itself is no longer the expensive
 The bottleneck becomes validation - understanding the code and verifying it is correct takes much more effort than creating that code.
 
 A good test suite helps us both to understand and to verify the correctness of the code.
+
+---
+
+# Levels of understanding
+
+When you write code by hand, you mostly understand how it works.
+There is of course a spectrum of understanding, maybe some parts were copy and pasted from stackoverflow, maybe the details of some parts are a bit unclear.
+But by and large, if the thing works as intended, and you wrote it, you pretty much understand how it works.
+
+When you produce code using an LLM this is no longer necessarily true.
+
+---
+
+# Levels of understanding
+
+1. I understand every line of code and the tests
+2. I understand the tests and most of the code
+3. I understand the tests, but not the code
+4. I understand the big picture, but not the tests or the code
+5. I don't understand the big picture, or the tests, or the code
+
+---
+
+# Appropriate understanding
+
+Even before LLMs, it was inefficient to be at level 1 for all the code you write.
+
+- for a javascript animation in your website, it may be fine for you to have no idea how it works
+- for the main algorithm from your thesis, you need to have a very deep understanding
+- most code lies somewhere in between
+
+---
+
+# How to increase your understanding
+
+Avoid being passive! Don't just ask it to do something, but debate different possible solutions, discuss pros and cons, eventually agree on a design / tests / implementation.
+
+- Question anything you don't understand
+- Ask it to explain why it made particular design choices
+- Suggest simplifications, better approaches
+- Look for existing code that can be re-used instead of writing new duplicated logic
+
+If you're an experienced software developer used to reviewing other peoples code, this is actually pretty similar!
+
+---
+
+# How to increase your understanding
+
+What if you're not an experienced software developer?
+
+- Question anything you don't understand
+- Ask it to explain why it made particular design choices
+- Ask it what alternative design choices could make sense here
+- Ask it if this can be simplified
+- Ask it what constraints or invariants it is assuming
+- Get another LLM (or the same one with fresh context) to review it
+
+---
+
+# How to increase correctness
+
+Tests are the key to correct code. If you have a good test suite:
+
+- Tests specify all the desired behaviour of your code
+- Anything not tested is not constrained
+
+Ideally someone could correctly re-implement your codebase just based on making the test suite pass. (This is not just hypothetical, e.g. migrating from python to rust with an LLM - given a great test suite - can be relatively straightforward!)
+
+---
+
+# How do tests help LLMs
+
+LLMs work best (like people) when
+
+- they have clear goals
+- they have clear ways to tell if they've reached their goals
+- they can iterate and get feedback quickly
+
+The test suite is key:
+
+- defines what the code needs to do
+  - helps correctness
+- also defines what doesn't matter (anything not tested)
+  - helps reduce bloat / overcomplications
+
+---
+
+# Failure modes
+
+- local reasoning
+  - LLMs only have a local view of the code
+  - this makes them (relatively) bad at architecture / API decisions
+  - making changes that are consistent with / take into account conventions/ preserve invariants from a large codebase
+  - note they are bad at this relative to their ability to implement code, they can still be pretty good!
+- code bloat
+  - defensive coding
+  - backwards compatibility
+  - unnecessary complexity
+  - "enterprise" coding style
+- cheating
+  - in particular when writing tests
+
+---
+
+# Older failure modes
+
+These failure modes used to be very common but seem to have been largely fixed in recent models:
+
+- incorrect code
+  - code that doesn't compile
+  - code that contains syntax errors
+- hallucinations
+  - uses an invented API call that doesn't exist
+  - or invents a language feature
+- convincing "at a distance" code
+  - looks good at first glance
+  - but lots of small details are wrong
+
+---
+
+# Code bloat
+
+By default, current LLMs do a pretty great job of implementing what you ask for without breaking stuff or crashing. However, this means
+
+- defensive programming style
+  - they take into account a lot of possible invalid inputs or state
+- backwards compatibility
+  - they try to avoid breaking existing code by adding backwards compatibility layers and logic
+
+In addition they have
+
+- enterprise programming style
+  - overcomplicated APIs
+- only local understanding
+  - re-implement existing functionality, miss non-local effects of their changes
+
+At first glance this seems harmless, maybe even good? Yes we have a bit more code than strictly required, but it works, nothing got broken...
+
+---
+
+# Recursive code bloat
+
+The problem is that with every iteration of an LLM on the codebase, they have to take into account more and more possible weird states, and more and more backward compatible branches and forks in the logic, and as the codebase grows their local understanding of it becomes more and more of a limitation.
+
+You need to actively fight against this bloat (which is not unique to LLMs, but it does happen much faster with them than with humans).
+You can do this by asking for simplifications, finding duplications, discussing what assumptions are being made that are not needed, or what backwards compatibility is actually required, etc.
+
+A great tool for this is a good test suite. Then instead of it guessing what inputs it may have to deal with, or what changes needs backwards compatibility, you can just point it to the tests. If they are reasonably complete, then any change that doesn't break tests is ok, which can allow for a lot of simplification.
+
+---
+
+# Getting what you ask for
+
+LLMs are amazingly good at giving you what you ask for. But not always at giving you what you need.
+
+---
+
+# TDD
+
+TDD works in a tight feedback loop of three steps
+
+- write failing test
+- write code to make the test pass
+- refactor
+
+The key point is to think about the test before the implementation,
+which also forces you to think about the API before the implementation,
+and to work in small incremental steps.
+
+---
+
+# Test suite as oracle
+
+With LLM code, having a good test suite becomes even more valuable
+
+- although not if the tests are just written after the implementation by the LLM!
+
+You should iterate with the LLM on the tests, in particular
+
+- test that check the code does what it should do with some valid input (happy path)
+- also what happens with invalid inputs (unhappy path)
+- end goal is a test suite that more or less specifies the code
+
+If you understand the test suite, and it covers all the key behaviours of the code,
+then you can be fairly confident in the correctness of the generated code, even without understanding the code!
+
+Anecdote: one OpenAI developer still writes their tests by hand, the LLM then writes all the code.
+
+---
+
+# Context
+
+The LLM that wrote the code has all that code in its context.
+To get a less biased opinion, clear the context and/or use a different model:
+
+- `/review` in claude/codex does a review with fresh context window
+- `/clear` then ask it e.g. to review the tests and if they cover all relevant cases
+- use another model to review code and tests, and ask it questions
 
 ---
 
@@ -541,198 +747,6 @@ Why?
 
 ---
 
-# Levels of understanding
-
-When you write code by hand, you mostly understand how it works.
-There is of course a spectrum of understanding, maybe some parts were copy and pasted from stackoverflow, maybe the details of some parts are a bit unclear.
-But by and large, if the thing works as intended, and you wrote it, you pretty much understand how it works.
-
-When you produce code using an LLM this is no longer necessarily true.
-
----
-
-# Levels of understanding
-
-1. I understand every line of code and the tests
-2. I understand the tests and most of the code
-3. I understand the tests, but not the code
-4. I understand the big picture, but not the tests or the code
-5. I don't understand the big picture, or the tests, or the code
-
----
-
-# Appropriate understanding
-
-Even before LLMs, it was inefficient to be at level 1 for all the code you write.
-
-- for a javascript animation in your website, it may be fine for you to have no idea how it works
-- for the main algorithm from your thesis, you need to have a very deep understanding
-- most code lies somewhere in between
-
----
-
-# How to increase your understanding
-
-Avoid being passive! Don't just ask it to do something, but debate different possible solutions, discuss pros and cons, eventually agree on a design / implementation.
-
-- Question anything you don't understand
-- Ask it to explain why it made particular design choices
-- Suggest simplifications, better approaches
-- Look for existing code that can be re-used instead of writing new duplicated logic
-
-If you're an experienced software developer used to reviewing other peoples code, this is actually pretty similar!
-
----
-
-# How to increase your understanding
-
-What if you're not an experienced software developer?
-
-- Question anything you don't understand
-- Ask it to explain why it made particular design choices
-- Ask it what alternative design choices would make sense here
-- Ask it if this can be simplified
-- Ask it what constraints or invariants it is assuming
-- Get another LLM (or the same one with fresh context) to review it
-
----
-
-# How to increase correctness
-
-Tests are the key to correct code. If you have a good test suite:
-
-- Tests specify the desired behaviour of your code
-- Anything not tested is not constrained
-
----
-
-# How do tests help LLMs
-
-LLMs work best (like people) when
-
-- they have clear goals
-- they have clear ways to tell if they've reached their goals
-- they can iterate and get feedback quickly
-
----
-
-# Code bloat
-
-By default, current LLMs do a pretty great job of implementing what you ask for without breaking stuff or crashing. However, this means
-
-- defensive programming style
-  - they take into account a lot of possible invalid inputs or state
-- backwards compatibility
-  - they try to avoid breaking existing code by adding backwards compatibility layers and logic
-
-In addition they have
-
-- enterprise programming style
-  - overcomplicated APIs
-- only local understanding
-  - re-implement existing functionality, miss non-local effects of their changes
-
-At first glance this seems harmless, maybe even good? Yes we have a bit more code than strictly required, but it works, nothing got broken...
-
----
-
-# Recursive code bloat
-
-The problem is that with every iteration of an LLM on the codebase, they have to take into account more and more possible weird states, and more and more backward compatible branches and forks in the logic, and as the codebase grows their local understanding of it becomes more and more of a limitation.
-
-You need to actively fight against this bloat (which is not unique to LLMs, but it does happen much faster with them than with humans).
-You can do this by asking for simplifications, finding duplications, discussing what assumptions are being made that are not needed, or what backwards compatibility is actually required, etc.
-
-A great tool here though is to have a good test suite. Then instead of it guessing what inputs it may have to deal with, or what changes needs backwards compatibility, you can just point it to the tests. If they are reasonably complete, then any change that doesn't break tests is ok, which can allow a lot of simplification.
-
----
-
-# Failure modes
-
-- local reasoning
-  - LLMs only have a local view of the code
-  - this makes them (relatively) bad at architecture / API decisions
-  - making changes that are consistent with / take into account conventions/ preserve invariants from a large codebase
-  - note they are bad at this relative to their ability to implement code, they can still be pretty good!
-- code bloat
-  - defensive coding
-  - backwards compatibility
-  - unnecessary complexity
-  - "enterprise" coding style
-- cheating
-  - in particular when writing tests
-
----
-
-# Older failure modes
-
-These failure modes used to be very common but seem to have been largely fixed in recent models:
-
-- incorrect code
-  - code that doesn't compile
-  - code that contains syntax errors
-- hallucinations
-  - uses an invented API call that doesn't exist
-  - or invents a language feature
-- convincing "at a distance" code
-  - looks good at first glance
-  - but lots of small details are wrong
-
----
-
-# Getting what you ask for
-
-LLMs are amazingly good at giving you what you ask for. But not always at giving you what you need.
-
----
-
-# TDD
-
-TDD works in a tight feedback loop of three steps
-
-- write failing test
-- write code to make the test pass
-- refactor
-
-The key point is to think about the test before the implementation,
-which also forces you to think about the API before the implementation,
-and to work in small incremental steps.
-
----
-
-# Test suite as oracle
-
-With LLM code, having a good test suite becomes even more valuable
-
-- although not if the tests are just written after the implementation by the LLM!
-
-You should iterate with the LLM on the tests, in particular
-
-- test that check the code does what it should do with some valid input (happy path)
-- also what happens with invalid inputs (unhappy path)
-- end goal is a test suite that more or less specifies the code
-
-If you understand the test suite, and it covers all the key behaviours of the code,
-then you can be fairly confident in the correctness of the generated code, even without understanding the code!
-
-Anecdote: one OpenAI developer still writes their tests by hand, the LLM then writes all the code.
-
----
-
-# Context
-
-The LLM that wrote the code has all that code in its context.
-To get a less biased opinion, clear the context and/or use a different model:
-
-- `/review` in claude/codex does a review with fresh context window
-- `/clear` then ask it e.g. to review the tests and if they cover all relevant cases
-- use another model to review code and tests, and ask it questions
-
----
-
-
----
-
 <!-- _class: subtitle -->
 
 # Development workflows
@@ -880,12 +894,61 @@ Short cyle of three steps:
 
 ---
 
+# Vibe coding
+
+Let's make a new folder to work in:
+
+```
+vibe-tic-tac-toe/
+```
+
+And this time I'll use Claude Opus 4.8:
+
+```
+claude
+```
+
+---
+
 # Feature roadmap
 
-For vibe coding, the features are typically very broad and ill defined:
+For vibe coding, the feature roadmap is typically much broader and less well defined, e.g.:
 
-- Make a GUI python game of tic-tac-toe
-- The user can play against the computer
+* Make a GUI python game of tic-tac-toe - use uv, pytest, follow best practices
+* Make an engine that can play against the user
+* Make it a 4x4 version of tic-tac-toe
+* Use monte-carlo tree search for the engine
+* Use an alpha-zero style neural network for the engine
+
+---
+
+# Vibe failure modes
+
+- I tried this with our local model
+  - It created an engine that would always draw or win
+  - And a decent size test suite that passed
+- The first time I played against it I won
+  - After a lot of additional thinking and coding from the model..
+  - ... it realised it was always choosing the *worst* mover instead of the best one!
+- A test suite helps reduce this kind of thing
+  - But it's easy to write tests that pass but don't actually check all relevant behaviour
+
+In this case it was obvious there was a bug, but in a more realistic case these kind of mistakes, if they are made, will not get caught.
+
+---
+
+# Vibe coding takeaways
+
+- We very quickly developed a lot of cool functionality
+- We don't know if it works correctly
+- We have no idea how it works
+- We don't know if the test suite tests all relevant behaviour
+
+My suggestion:
+
+- Vibe code for quick prototypes, trying out different approaches, feasibility, experimentation, etc.
+- Insist on it creating a test suite, even if you never look at the tests yourself
+- Once you get something you want to continue working on, throw it away, and do it again properly
 
 ---
 
