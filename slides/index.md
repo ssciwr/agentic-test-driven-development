@@ -346,7 +346,7 @@ With LLM code, having a good test suite becomes even more valuable
 
 You should iterate with the LLM on the tests, in particular
 
-- test that check the code does what it should do with some valid input (happy path)
+- tests that check the code does what it should do with some valid input (happy path)
 - also what happens with invalid inputs (unhappy path)
 - end goal is a test suite that more or less specifies all relevant behaviours of the code
 
@@ -529,6 +529,20 @@ This is the kind of testing we will use in this course.
 
 ---
 
+# Acceptance tests
+
+- Check the software does what the user actually wanted
+- Written from the user's / customer's point of view
+  - Phrased in terms of desired behaviour, not implementation
+  - Often: *given* some context, *when* an action, *then* an outcome
+- Tests requirements rather than individual units of code
+- Can be manual (a customer signing off) or automated
+- When automated and written first, this is "acceptance-test-driven development"
+  - The tests become an executable specification of the requirements
+  - We'll use this idea later in the spec-driven session
+
+---
+
 # Performance tests
 
 - Test performance using benchmarks for specific workloads
@@ -593,7 +607,7 @@ This is the kind of testing we will use in this course.
 - Readable
   - It is obvious from looking at it what the test does
 - Complete
-  - They covers all relevant cases and behaviours
+  - They cover all relevant cases and behaviours
 - Documentation
   - They demonstrate how the code being tested should be used
 - Resilient
@@ -772,6 +786,8 @@ Short repeated cyle of three steps:
 
 ---
 
+# Test driven development: trade-offs
+
 - Advantages
   - You write every line of code and tests
   - You know that the code is correct
@@ -793,6 +809,8 @@ Short repeated cyle of three steps:
 
 ---
 
+# Agentic test-driven-development: trade-offs
+
 - Advantages
   - You are involved in all decisions
   - You know that the code is correct
@@ -812,6 +830,8 @@ Short repeated cyle of three steps:
 
 ---
 
+# Spec-driven / acceptance-test-driven: trade-offs
+
 - Advantages
   - You are involved key decisions about what it should do
   - You know that the code is correct
@@ -830,6 +850,8 @@ Short repeated cyle of three steps:
 - keep iterating until you are happy
 
 ---
+
+# Vibe coding: trade-offs
 
 - Advantages
   - Very fast code production
@@ -933,6 +955,10 @@ Compared to writing the code by hand
 <!-- _class: subtitle -->
 
 # Hands on agentic spec-driven development
+
+---
+
+# Agentic spec-driven development
 
 - Often spec-driven refers to first writing detailed text description of what the code should do
 - In our case we will take it a step further, and treat the test suite itself as the spec
