@@ -18,8 +18,8 @@ description: SSC Compact Course
 
 # Course Outline
 
-- **5min** A brief history of coding
-- **20min** Coding with LLMs
+- **10min** A brief history of coding
+- **20min** Coding with agents
 - **30min** Software testing
 - **10min** Development workflows
 - **30min** Hands on test-driven development
@@ -122,11 +122,23 @@ If you feel like it's hard to keep up with this dramatic rate of change, you're 
 
 <!-- _class: subtitle -->
 
-# Coding with LLMs
+# Coding with agents
 
 ---
 
-# Advantages of coding with LLMs
+# What is an agent?
+
+For the purposes of this talk, by agent we mean an LLM that can interact with you and your computer via a coding harness. The harness is just the interface between you, your files, and the LLM:
+
+- Claude Code is the harness for the Claude LLM
+- Codex is the harness for ChatGPT
+- Pi is one of many alternative harnesses that can work with a variety of LLMs
+
+These all offer a command line interface for you to interact with the LLM.
+
+---
+
+# Advantages of coding with agents
 
 - You can generate **a lot** of **working** code **very quickly**, even without understanding it
 
@@ -140,7 +152,7 @@ In what scenarios is this an advantage?
 
 ---
 
-# Disadvantages of coding with LLMs
+# Disadvantages of coding with agents
 
 - You can generate **a lot** of working code very quickly, even **without understanding it**
 
@@ -154,22 +166,20 @@ In what scenarios is this a disadvantage?
 
 ---
 
-???
-
 # Validation as the bottleneck
 
-When writing code with LLMs, creating the code itself is no longer the expensive / difficult part.
+When writing code with LLMs, creating the code itself is often no longer the expensive / difficult part.
 
 The bottleneck becomes validation - understanding the code and verifying it is correct takes much more effort than creating that code.
-
-A good test suite helps us both to understand and to verify the correctness of the code.
 
 ---
 
 # Levels of understanding
 
 When you write code by hand, you mostly understand how it works.
+
 There is of course a spectrum of understanding, maybe some parts were copy and pasted from stackoverflow, maybe the details of some parts are a bit unclear.
+
 But by and large, if the thing works as intended, and you wrote it, you pretty much understand how it works.
 
 When you produce code using an LLM this is no longer necessarily true.
@@ -226,10 +236,12 @@ What if you're not an experienced software developer?
 
 Tests are the key to correct code. If you have a good test suite:
 
-- Tests specify all the desired behaviour of your code
+- Tests specify all the desired and required behaviour of your code
 - Anything not tested is not constrained
 
-Ideally someone could correctly re-implement your codebase just based on making the test suite pass. (This is not just hypothetical, e.g. migrating from python to rust with an LLM - given a great test suite - can be relatively straightforward!)
+Ideally an agent should be able to correctly re-implement your codebase just based on making the test suite pass.
+
+(This is not just hypothetical, e.g. consider migrating a project from python to rust)
 
 ---
 
@@ -316,25 +328,17 @@ A great tool for this is a good test suite. Then instead of it guessing what inp
 
 # Getting what you ask for
 
-LLMs are amazingly good at giving you what you ask for. But not always at giving you what you need.
+LLMs are amazingly good at giving you what you ask for.
+
+But not always at giving you what you need.
+
+Consider asking them if what they gave you follows best practices, often if you ask for something dubious they will go ahead and deliver, even while they are aware of better alternatives if you prompt them.
+
+Similarly, they are very good at pattern matching and following existing conventions in a codebase. In a well written codebase this is a wonderful feature. In a badly written one however they tend to follow existing anti-patterns unless you specifically ask them not to.
 
 ---
 
-# TDD
-
-TDD works in a tight feedback loop of three steps
-
-- write failing test
-- write code to make the test pass
-- refactor
-
-The key point is to think about the test before the implementation,
-which also forces you to think about the API before the implementation,
-and to work in small incremental steps.
-
----
-
-# Test suite as oracle
+# Test suite as the oracle
 
 With LLM code, having a good test suite becomes even more valuable
 
@@ -344,7 +348,7 @@ You should iterate with the LLM on the tests, in particular
 
 - test that check the code does what it should do with some valid input (happy path)
 - also what happens with invalid inputs (unhappy path)
-- end goal is a test suite that more or less specifies the code
+- end goal is a test suite that more or less specifies all relevant behaviours of the code
 
 If you understand the test suite, and it covers all the key behaviours of the code,
 then you can be fairly confident in the correctness of the generated code, even without understanding the code!
@@ -353,14 +357,16 @@ Anecdote: one OpenAI developer still writes their tests by hand, the LLM then wr
 
 ---
 
-# Context
+# Reviewing changes and context
 
-The LLM that wrote the code has all that code in its context.
+LLMs are also great at reviewing code. But the LLM instance that just wrote the code has all that code and all of the thinking that went into this in its context.
 To get a less biased opinion, clear the context and/or use a different model:
 
-- `/review` in claude/codex does a review with fresh context window
-- `/clear` then ask it e.g. to review the tests and if they cover all relevant cases
-- use another model to review code and tests, and ask it questions
+- `/new` starts a new chat session and clears all the existing context
+- `/review` in claude/codex does a review (but you can also just ask any model to review the changes)
+- use another model to review code and tests, and ask it any questions you have
+
+I find for non-trivial changes, an independent agent review almost always finds relevant bugs that both I and the model missed when writing the code.
 
 ---
 
@@ -755,7 +761,7 @@ Why?
 
 # Test driven development
 
-Short cyle of three steps:
+Short repeated cyle of three steps:
 
 - we first write the (failing) tests for a feature
   - note this implies thinking about the API, can't write a test without an API!
@@ -841,11 +847,9 @@ Short cyle of three steps:
 
 ---
 
-# Hands on with pytest
+# Agentic test-driven development
 
-- Start working on a simple tic-tac-toe game in Python
-- We'll develop some basic functionality together
-- Do this in a TDD (test-driven-development) style
+- A simple tic-tac-toe game in Python in a TDD (test-driven-development) style
 
 ![width:300px](tdd.svg)
 
@@ -859,32 +863,123 @@ Short cyle of three steps:
 
 # Starting point
 
-- Start from a mostly empty project
-- Clone the repository from github:
-  - `git clone https://github.com/ssciwr/agentic-test-driven-development.git`
-  - `cd agentic-test-driven-development`
-- Checkout the "cleanstart" branch:
-  - `git checkout cleanstart`
-- Run the tests (note that there aren't any yet!)
-  - `uv run pytest`
+Let's make a new folder to work in:
+
+```
+tdd-tic-tac-toe/
+```
+
+And open our harness, e.g. `claude`, `codex` or `pi`, in that folder:
+
+```
+pi
+```
+
+If you don't have a harness set up, then install pi:
+
+- windows: `powershell -c "irm https://pi.dev/install.ps1 | iex"`
+- linux/mac: `curl -fsSL https://pi.dev/install.sh | sh`
+
+---
+
+# pi: models.json
+
+For those installing pi, copy and paste the following into `~/.pi/agent/models.json`:
+
+```json
+{
+  "providers": {
+    "ssc": {
+      "baseUrl": "http://hgscomp01.iwr.uni-heidelberg.de:9001/v1",
+      "api": "openai-completions",
+      "apiKey": "agentictdd",
+      "models": [
+        {
+          "id": "agentictdd"
+        }
+      ]
+    }
+  }
+}
+```
 
 ---
 
 # Feature roadmap
 
-- Starting point: we have a `Player`
-- Implement a `Board` to store the game state
-- Allow a player to make a move on a square of the `Board`
-- The `Board` validates the moves and only allows valid ones
-- The `Board` determines if a game is over and which `Player` won
-- Implement an `Engine` that can play the game
-- Implement a GUI interface to play against the `Engine`
+* Create a `Player` enum with cross or circle
+* Implement a `Board` to store the game state
+* Allow a player to make a move on a square of the `Board`
+* The `Board` validates the moves and only allows valid ones
+* The `Board` determines if a game is over and which `Player` won
+* Implement an `Engine` that can play the game
+* Implement a GUI interface so a user can play against the `Engine`
+
+---
+
+# Test driven development takeaways
+
+- Significantly faster than coding by hand
+- We understand the test suite and believe it to be fairly complete, so fairly confident the code is correct
+- We were actively involved in the code implementation, so have a decent understanding of that too
+
+Compared to writing the code by hand
+
+- Correctness should be similar
+- We mostly know how the code works
 
 ---
 
 <!-- _class: subtitle -->
 
 # Hands on agentic spec-driven development
+
+- Often spec-driven refers to first writing detailed text description of what the code should do
+- In our case we will take it a step further, and treat the test suite itself as the spec
+- In both cases the agent is generally allowed to implement from the spec as it thinks best
+- The big advantage of tests over a text as the spec is that the implementation can't diverge from the spec
+- In one line: we'll work with the agent on the tests, then let it do the implementation
+
+---
+
+# Starting point
+
+Let's make a new folder to work in:
+
+```
+spec-tic-tac-toe/
+```
+
+And open our harness, e.g. `claude`, `codex` or `pi`, in that folder:
+
+```
+codex
+```
+
+---
+
+# Feature roadmap
+
+* Create a `Player` enum with cross or circle
+* Implement a `Board` to store the game state
+* Allow a player to make a move on a square of the `Board`
+* The `Board` validates the moves and only allows valid ones
+* The `Board` determines if a game is over and which `Player` won
+* Implement an `Engine` that can play the game
+* Implement a GUI interface so a user can play against the `Engine`
+
+---
+
+# Spec driven development takeaways
+
+- Somewhat faster than test-driven-development
+- We understand the test suite and believe it to be fairly complete, so fairly confident the code is correct
+- We don't understand the implementation
+
+Compared to writing the code by hand
+
+- Correctness should be similar
+- We don't know how the code works
 
 ---
 
@@ -902,38 +997,23 @@ Let's make a new folder to work in:
 vibe-tic-tac-toe/
 ```
 
-And this time I'll use Claude Opus 4.8:
+And open our harness, e.g.
 
 ```
-claude
+codex
 ```
 
 ---
 
 # Feature roadmap
 
-For vibe coding, the feature roadmap is typically much broader and less well defined, e.g.:
+For vibe coding, the feature roadmap is typically much broader and less well defined, and can even directly be what you put in the prompts, e.g.:
 
 * Make a GUI python game of tic-tac-toe - use uv, pytest, follow best practices
 * Make an engine that can play against the user
 * Make it a 4x4 version of tic-tac-toe
 * Use monte-carlo tree search for the engine
 * Use an alpha-zero style neural network for the engine
-
----
-
-# Vibe failure modes
-
-- I tried this with our local model
-  - It created an engine that would always draw or win
-  - And a decent size test suite that passed
-- The first time I played against it I won
-  - After a lot of additional thinking and coding from the model..
-  - ... it realised it was always choosing the *worst* mover instead of the best one!
-- A test suite helps reduce this kind of thing
-  - But it's easy to write tests that pass but don't actually check all relevant behaviour
-
-In this case it was obvious there was a bug, but in a more realistic case these kind of mistakes, if they are made, will not get caught.
 
 ---
 
@@ -944,16 +1024,75 @@ In this case it was obvious there was a bug, but in a more realistic case these 
 - We have no idea how it works
 - We don't know if the test suite tests all relevant behaviour
 
-My suggestion:
+Compared to writing the code by hand
 
-- Vibe code for quick prototypes, trying out different approaches, feasibility, experimentation, etc.
-- Insist on it creating a test suite, even if you never look at the tests yourself
-- Once you get something you want to continue working on, throw it away, and do it again properly
+- We're not sure if the code is correct or not
+- We don't know how the code works
+
+---
+
+# Vibe coding failure mode #1
+
+Wrong implementation + cheating or insufficient tests.
+
+- I tried this with our local model
+  - It created an engine that would always draw or win
+  - And a decent size test suite that passed
+- The first time I played against it I won
+  - After a lot of additional thinking, and writing new tests..
+  - ... it realised it was always choosing the *worst* move instead of the best one!
+- A test suite helps reduce this kind of thing
+  - But it's easy to write tests that pass but don't actually check all relevant behaviour
+
+In this case it was obvious there was a bug, but in a more realistic case these kind of mistakes, if they are made, will mostly not get caught.
+
+---
+
+# Vibe coding failure mode #2
+
+Lack of understanding of what you have done.
+
+- Let's assume the model did a perfect job writing the code
+- There can still be the problem that you don't understand what it has done
+- In some cases that's fine, you don't need to understand it and it clearly works as intended
+- But in most cases this is a problem!
+
+> **kache** @yacineMTB
+>
+> you can outsource your thinking
+> but you cannot outsource your understanding
+>
+> Feb 2026
+> https://x.com/yacineMTB/status/2018886083120153046
+
+---
+
+# Workflow suggestions
+
+Each of these workflows is a valid choice, depending on the context of what you are trying to do:
+
+- Vibe code: quick prototypes, trying out different approaches, feasibility, experimentation, etc.
+  - Insist on it creating a test suite, even if you never look at the tests yourself
+  - But once you get something you want to continue working on, throw it away, and do it again properly
+- Spec driven code: when it needs to work but you don't need to understand it
+  - Make sure you understand the tests, and they must test all relevant behaviours!
+- Test driven development: when it needs to work and you need to understand it
+  - Make sure you're actively involved in both the test and the implementation
+- Hand written test-driven development: when you *really* need to understand it
 
 ---
 
 # Summary
 
----
+- We looked at coding with LLMs
+- We covered software testing best practices
+- We tried three different agentic development workflows
+  - Test-driven
+  - Spec-driven
+  - Vibe-coding
+- Agentic coding is evolving very quickly
+- Software engineering best practices continue to apply and provide value
 
-- todo
+For a free consulation on any aspect of research software: ssc@uni-heidelberg.de
+
+---
