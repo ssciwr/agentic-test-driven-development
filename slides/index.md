@@ -942,7 +942,8 @@ For those installing pi, copy and paste the following into `~/.pi/agent/models.j
 # Test driven development takeaways
 
 - Significantly faster than coding by hand
-- We understand the test suite and believe it to be fairly complete, so fairly confident the code is correct
+- We understand the test suite and believe it to be fairly complete
+- Based on the test suite we are fairly confident the code is correct
 - We were actively involved in the code implementation, so have a decent understanding of that too
 
 Compared to writing the code by hand
@@ -1110,15 +1111,31 @@ Each of these workflows is a valid choice, depending on the context of what you 
 
 # Summary
 
-- We looked at coding with LLMs
-- We covered software testing best practices
-- We tried three different agentic development workflows
+In this course we covered
+
+- Coding with agents
+- Software testing best practices
+- Agentic development workflows
   - Test-driven
   - Spec-driven
   - Vibe-coding
-- Agentic coding is evolving very quickly
-- Software engineering best practices continue to apply and provide value
 
-For a free consulation on any aspect of research software: ssc@uni-heidelberg.de
+Agentic coding is evolving very quickly: agents, skills, mcp servers, loops, etc.
+
+But established software engineering best practices continue to apply, and provide a lot of value.
 
 ---
+
+# tldr
+
+Whatever workflow you use when coding with agents:
+
+- Be active! Ask questions, make suggestions, critique the code and tests
+- Ask what assumptions it made, if the code can be simplified, if there is a better way
+- Ask it to use best practices, especially if working in an existing codebase that may not follow them
+- Always create a test suite, even when vibe coding
+- Review all changes with fresh context and/or different models
+
+And finally, please fill in this very short feedback form to help improve the next iteration of this course:
+
+https://forms.gle/pXWTRymSyTcgELhm9
