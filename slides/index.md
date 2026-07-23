@@ -267,7 +267,7 @@ The test suite is key:
 - local reasoning
   - LLMs only have a local view of the code
   - this makes them (relatively) bad at architecture / API decisions
-  - making changes that are consistent with / take into account conventions/ preserve invariants from a large codebase
+  - and preserving invariants and following conventions in a very large codebase
   - note they are bad at this relative to their ability to implement code, they can still be pretty good!
 - code bloat
   - defensive coding
@@ -362,7 +362,7 @@ Anecdote: one OpenAI developer still writes their tests by hand, the LLM then wr
 LLMs are also great at reviewing code. But the LLM instance that just wrote the code has all that code and all of the thinking that went into this in its context.
 To get a less biased opinion, clear the context and/or use a different model:
 
-- `/new` starts a new chat session and clears all the existing context
+- `/clear` (or `/new` in pi) starts a new chat session and clears all the existing context
 - `/review` in claude/codex does a review (but you can also just ask any model to review the changes)
 - use another model to review code and tests, and ask it any questions you have
 
@@ -427,8 +427,8 @@ This is the kind of testing we will use in this course.
 - Hard to retrofit to legacy code
   - Approval testing strategy can help
 - Bad tests can be worse than no tests
-  - False negative tests can waste time or result in test failures being ignored
-  - False positive tests can give false sense of security
+  - Tests that incorrectly fail can waste time or result in test failures being ignored
+  - Tests that incorrectly pass can give false sense of security
 
 ---
 
@@ -463,8 +463,8 @@ This is the kind of testing we will use in this course.
 - Regression tests
 - Approval tests
 - Acceptance tests
-- Smoke tests
 - Performance tests
+- Smoke tests
 - Fuzzing tests
 - Property based tests
 - …
@@ -524,8 +524,6 @@ This is the kind of testing we will use in this course.
 - But quick to create and can be done without deep understanding of the code
 - Then you can start to refactor or make changes
 - At least you get a test failure when the outputs change
-- Note:
-  - "approval testing" is also used to describe the tests a customer might make of a piece of software they commissioned to approve that it fulfils their requirements
 
 ---
 
@@ -611,7 +609,7 @@ This is the kind of testing we will use in this course.
 - Documentation
   - They demonstrate how the code being tested should be used
 - Resilient
-  - They only fail when the thing being tested is false, not for any other reason
+  - They only fail when the thing being tested is broken, not for any other reason
 - Unchanging
   - They don't need to be modified unless the behaviour being tested changes
 
@@ -743,7 +741,7 @@ Why?
   - This test is assuming the implementation is correct and will always pass
 - Use appropriate numerical conditions
   - E.g. 3 <= pi() <= 4 will pass for many outputs that may be unacceptable
-  - But pi() == 3.1415926535897 may fail for an output that was actually ok
+  - But pi() == 3.14159265358979 may fail for an output that was actually ok
   - Often a sensible choice here depends on your use case
 - Often worth testing the test
   - Intentionally (temporarily) break the implementation in some way
@@ -775,7 +773,7 @@ Why?
 
 # Test driven development
 
-Short repeated cyle of three steps:
+Repeated cyle of three short steps:
 
 - we first write the (failing) tests for a feature
   - note this implies thinking about the API, can't write a test without an API!
@@ -786,7 +784,7 @@ Short repeated cyle of three steps:
 
 ---
 
-# Test driven development: trade-offs
+# (Non-agentic) Test driven development: trade-offs
 
 - Advantages
   - You write every line of code and tests
@@ -813,7 +811,7 @@ Short repeated cyle of three steps:
 
 - Advantages
   - You are involved in all decisions
-  - You know that the code is correct
+  - You are confident that the code is correct
   - You mostly understand how it works
   - You have a great test suite
 - Disadvantages
@@ -833,9 +831,9 @@ Short repeated cyle of three steps:
 # Spec-driven / acceptance-test-driven: trade-offs
 
 - Advantages
-  - You are involved key decisions about what it should do
-  - You know that the code is correct
-  - Should result in an ok test suite
+  - You are involved in key decisions about what it should do
+  - You are confident that the code is correct
+  - Should result in a decent test suite
   - Faster rate of initial development
 - Disadvantages
   - You don't know how it works
@@ -891,7 +889,7 @@ Let's make a new folder to work in:
 tdd-tic-tac-toe/
 ```
 
-And open our harness, e.g. `claude`, `codex` or `pi`, in that folder:
+And open our harness, e.g. `claude`, `codex` or `pi`, in that folder. I'll use pi:
 
 ```
 pi
@@ -977,7 +975,7 @@ Let's make a new folder to work in:
 spec-tic-tac-toe/
 ```
 
-And open our harness, e.g. `claude`, `codex` or `pi`, in that folder:
+And open our harness, e.g. `claude`, `codex` or `pi`, in that folder. I'll use codex:
 
 ```
 codex
@@ -1024,10 +1022,10 @@ Let's make a new folder to work in:
 vibe-tic-tac-toe/
 ```
 
-And open our harness, e.g.
+And open our harness, e.g. `claude`, `codex` or `pi`, in that folder. I'll use claude:
 
 ```
-codex
+claude
 ```
 
 ---
@@ -1128,7 +1126,7 @@ But established software engineering best practices continue to apply, and provi
 
 # tldr
 
-Whatever workflow you use when coding with agents:
+Whatever workflow you use when coding with agents
 
 - Be active! Ask questions, make suggestions, critique the code and tests
 - Ask what assumptions it made, if the code can be simplified, if there is a better way
