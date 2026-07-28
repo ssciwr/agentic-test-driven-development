@@ -19,12 +19,12 @@ description: SSC Compact Course
 # Course Outline
 
 - **10min** A brief history of coding
-- **20min** Coding with agents
-- **30min** Software testing
+- **30min** Coding with agents
+- **40min** Software testing
 - **10min** Development workflows
 - **30min** Hands on agentic test-driven development
 - **30min** Hands on agentic spec-driven development
-- **10min** Hands on vibe coding
+- **15min** Hands on vibe coding
 
 ---
 
@@ -1139,7 +1139,3 @@ Whatever workflow you use when coding with agents
 - Ask it to use best practices, especially if working in an existing codebase that may not follow them
 - Always create a test suite, even when vibe coding
 - Review all changes with fresh context and/or different models
-
-And finally, please fill in this very short feedback form to help improve the next iteration of this course:
-
-https://forms.gle/pXWTRymSyTcgELhm9
